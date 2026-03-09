@@ -2,11 +2,14 @@ import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import { useState } from "react";
+import { router } from "expo-router";
 
 export default function Login() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    
     return (
         <View className="flex-1 bg-background justify-center px-6">
 
@@ -37,7 +40,7 @@ export default function Login() {
             />
 
             {/* Register */}
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push("/register")} className="mt-4">
                 <Text className="text-center text-secondary font-semibold">
                     Crear cuenta
                 </Text>
