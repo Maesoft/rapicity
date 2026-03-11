@@ -1,6 +1,6 @@
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
-import Button from "../../components/Button";
-import Input from "../../components/Input";
+import { View, Text, TouchableOpacity } from "react-native";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
 import { useState } from "react";
 import { router } from "expo-router";
 
@@ -36,7 +36,7 @@ export default function Login() {
 
             <Button
                 title="Iniciar sesión"
-                onPress={() => console.log(email, password)}
+                onPress={() => router.push("/(client)/home")}
             />
 
             {/* Register */}
