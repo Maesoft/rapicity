@@ -24,7 +24,7 @@ export default function StoreCard({ store }: Props) {
         </Text>
 
         <Text className="text-gray-500">
-          {store.category}
+          {store.description}
         </Text>
 
         <View className="flex-row justify-between mt-2">
