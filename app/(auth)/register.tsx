@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import { useState } from "react";
 import { router } from "expo-router";
 import Input from "@/components/ui/Input";
@@ -55,9 +55,10 @@ export default function Register() {
 
             {/* Título */}
             <View className="items-center mb-10">
-                <Text className="text-3xl font-bold text-primary">
-                    Crear cuenta
-                </Text>
+                <Image
+                    source={require("@/assets/logo_transparente2.png")}
+                    className="w-full h-40 mb-4"
+                />
             </View>
             <View className="flex-row justify-between mb-6">
 

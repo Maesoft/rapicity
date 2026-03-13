@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { useState } from "react";
@@ -14,10 +14,11 @@ export default function Login() {
         <View className="flex-1 bg-background justify-center px-6">
 
             {/* Logo / Nombre */}
-            <View className="items-center mb-12">
-                <Text className="text-4xl font-bold text-primary">
-                    Rapicity
-                </Text>
+            <View className="items-center mb-8">
+                <Image
+                    source={require("@/assets/logo_transparente2.png")}
+                    className="w-full h-40 mb-8"
+                />
             </View>
 
             {/* Email */}
@@ -41,7 +42,7 @@ export default function Login() {
 
             {/* Register */}
             <TouchableOpacity onPress={() => router.push("/register")} className="mt-4">
-                <Text className="text-center text-secondary font-semibold">
+                <Text className="text-center text-lg text-secondary font-semibold">
                     Crear cuenta
                 </Text>
             </TouchableOpacity>
