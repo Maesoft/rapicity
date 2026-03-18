@@ -1,6 +1,6 @@
 import { View, FlatList } from "react-native";
-import StoreCard from "../../components/store/StoreCard";
-import { stores } from "../../data/stores";
+import StoreCard from "@/src/components/store/StoreCard";
+import { stores } from "@/src/data/stores";
 
 export default function Stores() {
   return (

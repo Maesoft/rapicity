@@ -1,6 +1,6 @@
 import { View, Text, Image, Pressable } from "react-native";
 import { router } from "expo-router";
-import { Store } from "../../types/Stores";
+import { Store } from "@/src/types/Stores";
 
 type Props = {
   store: Store;
@@ -10,7 +10,7 @@ export default function StoreCard({ store }: Props) {
   return (
     <Pressable
       onPress={() => router.push(`/store/${store.id}`)}
-      className="bg-white rounded-2xl mb-4 overflow-hidden shadow"
+      className="bg-gray-600 rounded-2xl mb-4 overflow-hidden shadow"
     >
       <Image
         source={{ uri: store.image }}
@@ -19,11 +19,11 @@ export default function StoreCard({ store }: Props) {
       />
 
       <View className="p-3">
-        <Text className="text-lg font-semibold">
+        <Text className="text-lg text-white font-semibold">
           {store.name}
         </Text>
 
-        <Text className="text-gray-500">
+        <Text className="text-gray-400">
           {store.description}
         </Text>
 

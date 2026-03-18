@@ -1,6 +1,6 @@
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { useState } from "react";
-import { SubCategory } from "@/types/SubCategory";
+import { SubCategory } from "@/src/types/SubCategory";
 
 type Props = {
   categories: SubCategory[];

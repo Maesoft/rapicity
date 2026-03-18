@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import Button from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
+import Button from "@/src/components/ui/Button";
+import Input from "@/src/components/ui/Input";
 import { useState } from "react";
 import { router } from "expo-router";
 

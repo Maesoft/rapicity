@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { useState } from "react";
 import { router } from "expo-router";
-import Input from "@/components/ui/Input";
+import Input from "@/src/components/ui/Input";
 
 export default function Register() {
 
