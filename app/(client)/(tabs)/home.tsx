@@ -34,8 +34,8 @@ export default function Home() {
   // PANTALLA DE CATEGORIAS
   if (!mainCategory) {
     return (
-      <View className="flex-1 justify-center bg-background p-4">
-        <Text className="mb-6 mt-10 text-center text-2xl font-bold text-secondary">
+      <View className="flex-1 justify-center bg-gray-800 p-4">
+        <Text className="mb-6 mt-20 text-center text-4xl font-bold text-white">
           ¿Qué necesitás hoy?
         </Text>
         <CategoryList categories={categories} onSelectCategory={handleSelectCategory} />

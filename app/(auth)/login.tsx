@@ -41,8 +41,8 @@ export default function Login() {
             />
 
             {/* Register */}
-            <TouchableOpacity onPress={() => router.push("/register")} className="mt-4">
-                <Text className="text-center text-lg text-secondary font-semibold">
+            <TouchableOpacity onPress={() => router.push("/register")} className="bg-gray-800 py-4 rounded-xl">
+                <Text className="text-center text-lg text-white font-bold">
                     Crear cuenta
                 </Text>
             </TouchableOpacity>
