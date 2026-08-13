@@ -38,7 +38,6 @@ export default function Register() {
         return true;
     }
 
-
     function handleRegister() {
         if (!validateForm()) return;
         console.log({
