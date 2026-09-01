@@ -3,16 +3,18 @@ import { useLocalSearchParams } from 'expo-router';
 import { stores } from '@/src/data/stores';
 import { products } from '@/src/data/products';
 import { Product } from '@/src/types/Product';
+import { useContext } from 'react';
+import { CartContext } from '@/src/context/CartContext';
+import CartButton from '@/src/components/client/CartButton';
 
 export default function ProductListScreen() {
   const { id } = useLocalSearchParams();
-
+  const cartContext = useContext(CartContext);
   const store = stores.find((s) => s.id === id);
   const storeProducts = products.filter((p) => p.storeId === id);
 
   const handleAddToCart = (product: Product) => {
-    console.log('Agregado:', product.name);
-    // después acá podés conectar con tu contexto de carrito
+    cartContext?.addToCart(product);
   };
 
   if (!store) {
@@ -55,6 +57,7 @@ export default function ProductListScreen() {
           </View>
         )}
       />
+      <CartButton />
     </View>
   );
 }

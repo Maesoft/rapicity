@@ -3,4 +3,5 @@ export type Product = {
   storeId: string
   name: string
   price: number
+  image: string
 }

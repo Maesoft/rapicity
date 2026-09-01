@@ -16,8 +16,22 @@ export const products = [
   {
     id: "3",
     storeId: "1",
-    name: "Fried Chicken Box",
-    price: 6000,
+    name: "Box Clasico",
+    price: 15000,
     image: "https://picsum.photos/100/100",
-  }
+  }, 
+  {
+    id: "4",
+    storeId: "1",
+    name: "Balde Chico",
+    price: 18000,
+    image: "https://picsum.photos/100/100",
+  },
+   {
+    id: "5",
+    storeId: "1",
+    name: "Balde Grande",
+    price: 30000,
+    image: "https://picsum.photos/100/100",
+  },
 ];

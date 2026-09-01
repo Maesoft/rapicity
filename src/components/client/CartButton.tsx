@@ -1,30 +1,47 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import { useCart } from "@/context/CartContext";
-import { useNavigation } from "@react-navigation/native";
+import { View, Text, Pressable } from 'react-native';
+import { useContext } from 'react';
+import { router } from 'expo-router';
+import { CartContext } from '@/src/context/CartContext';
 
 export default function CartButton() {
-  const { cart, getTotal } = useCart();
-  const navigation = useNavigation();
+  const cartContext = useContext(CartContext);
 
-  if (cart.length === 0) return null;
+  if (!cartContext?.cart.length) {
+    return null;
+  }
 
-  const total = getTotal();
-  const itemsCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+  // Cantidad total de productos
+  const totalItems = cartContext.cart.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
+  // Precio total
+  const totalPrice = cartContext.cart.reduce(
+    (total, item) => total + item.product.price * item.quantity,
+    0
+  );
 
   return (
-    <View className="absolute bottom-0 left-0 right-0 p-4 bg-transparent">
-      <TouchableOpacity
-        className="bg-green-600 rounded-2xl p-4 flex-row justify-between items-center"
-        onPress={() => navigation.navigate("Cart")}
+    <View className="absolute bottom-20 left-4 right-4">
+      <Pressable
+        onPress={() => router.push('/cart')}
+        className="flex-row items-center justify-between rounded-2xl bg-[#005F73] px-5 py-4"
       >
-        <Text className="text-white font-bold">
-          {itemsCount} productos
-        </Text>
+        <View>
+          <Text className="text-base font-bold text-gray-900">
+            Ver carrito
+          </Text>
 
-        <Text className="text-white font-bold">
-          ${total}
+          <Text className="text-sm text-gray-800">
+            {totalItems} {totalItems === 1 ? 'producto' : 'productos'}
+          </Text>
+        </View>
+
+        <Text className="text-lg font-bold text-gray-900">
+          ${totalPrice.toFixed(2)}
         </Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 }
