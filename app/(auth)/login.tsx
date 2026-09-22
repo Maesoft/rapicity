@@ -1,66 +1,72 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import Button from "@/src/components/ui/Button";
-import Input from "@/src/components/ui/Input";
-import { useState } from "react";
-import { router } from "expo-router";
+import { View, Text, TouchableOpacity, Image } from 'react-native';
+import Button from '@/src/components/ui/Button';
+import Input from '@/src/components/ui/Input';
+import { useState } from 'react';
+import { router } from 'expo-router';
+import { findUserByCredentials } from '@/src/data/users';
+import { useAuth } from '@/src/context/AuthContext';
 
 export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const { signIn } = useAuth();
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    
-    return (
-        <View className="flex-1 bg-background justify-center px-6">
+  function handleLogin() {
+    const user = findUserByCredentials(email, password);
 
-            {/* Logo / Nombre */}
-            <View className="items-center mb-8">
-                <Image
-                    source={require("@/assets/logo_transparente2.png")}
-                    className="w-full h-40 mb-8"
-                />
-            </View>
+    if (!user) {
+      setError('Email o contraseña incorrectos');
+      return;
+    }
 
-            {/* Email */}
-            <Input
-                placeholder="Email"
-                value={email}
-                onChangeText={setEmail}
-            />
+    setError('');
+    signIn(user);
+    router.replace('/(client)/(tabs)/home');
+  }
 
-            <Input
-                placeholder="Contraseña"
-                value={password}
-                onChangeText={setPassword}
-                secure
-            />
+  return (
+    <View className="flex-1 justify-center bg-background px-6">
+      {/* Logo / Nombre */}
+      <View className="mb-8 items-center">
+        <Image source={require('@/assets/logo_transparente2.png')} className="mb-8 h-40 w-full" />
+      </View>
 
-            <Button
-                title="Iniciar sesión"
-                onPress={() => router.push("/(client)/home")}
-            />
+      {/* Email */}
+      <Input placeholder="Email" value={email} onChangeText={setEmail} />
 
-            {/* Register */}
-            <TouchableOpacity onPress={() => router.push("/register")} className="bg-gray-800 py-4 rounded-xl">
-                <Text className="text-center text-lg text-white font-bold">
-                    Crear cuenta
-                </Text>
-            </TouchableOpacity>
+      <Input
+        placeholder="Contraseña"
+        value={password}
+        onChangeText={(value) => {
+          setPassword(value);
+          setError('');
+        }}
+        secure
+      />
 
-            {/* Divider */}
-            <View className="flex-row items-center my-8">
-                <View className="flex-1 h-[1px] bg-gray-400" />
-                <Text className="mx-4 text-gray-300">o</Text>
-                <View className="flex-1 h-[1px] bg-gray-400" />
-            </View>
+      <Button title="Iniciar sesión" onPress={handleLogin} />
 
-            {/* Google login */}
-            <TouchableOpacity className="bg-white py-4 rounded-xl">
-                <Text className="text-center font-semibold">
-                    Continuar con Google
-                </Text>
-            </TouchableOpacity>
+      {error ? <Text className="mb-4 text-center text-red-500">{error}</Text> : null}
 
-        </View>
-    );
+      {/* Register */}
+      <TouchableOpacity
+        onPress={() => router.push('/register')}
+        className="rounded-xl bg-gray-800 py-4">
+        <Text className="text-center text-lg font-bold text-white">Crear cuenta</Text>
+      </TouchableOpacity>
+
+      {/* Divider */}
+      <View className="my-8 flex-row items-center">
+        <View className="h-[1px] flex-1 bg-gray-400" />
+        <Text className="mx-4 text-gray-300">o</Text>
+        <View className="h-[1px] flex-1 bg-gray-400" />
+      </View>
+
+      {/* Google login */}
+      <TouchableOpacity className="rounded-xl bg-white py-4">
+        <Text className="text-center font-semibold">Continuar con Google</Text>
+      </TouchableOpacity>
+    </View>
+  );
 }

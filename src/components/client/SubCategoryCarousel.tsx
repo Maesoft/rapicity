@@ -1,17 +1,13 @@
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import { useState } from "react";
-import { SubCategory } from "@/src/types/SubCategory";
+import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { useState } from 'react';
+import { SubCategory } from '@/src/types/SubCategory';
 
 type Props = {
   categories: SubCategory[];
   onSelectSubCategory: (id: string) => void;
 };
 
-export default function SubCategoryCarousel({
-  categories,
-  onSelectSubCategory,
-}: Props) {
-
+export default function SubCategoryCarousel({ categories, onSelectSubCategory }: Props) {
   const [selected, setSelected] = useState<string | null>(null);
 
   const handlePress = (id: string) => {
@@ -32,17 +28,12 @@ export default function SubCategoryCarousel({
           return (
             <TouchableOpacity
               onPress={() => handlePress(item.id)}
-              className={`flex-row items-center px-4 py-2 rounded-full mr-3 ${
-                isActive ? "bg-orange-500" : "bg-gray-200"
-              }`}
-            >
+              className={`mr-3 flex-row items-center rounded-full border px-4 py-2 ${
+                isActive ? 'border-orange-400 bg-orange-500' : 'border-slate-600 bg-slate-800'
+              }`}>
               <Text className="mr-1">{item.icon}</Text>
 
-              <Text
-                className={`font-semibold ${
-                  isActive ? "text-white" : "text-gray-800"
-                }`}
-              >
+              <Text className={`font-semibold ${isActive ? 'text-white' : 'text-slate-300'}`}>
                 {item.name}
               </Text>
             </TouchableOpacity>

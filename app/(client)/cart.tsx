@@ -10,6 +10,9 @@ export default function CartScreen() {
     return (
       <View className="flex-1 items-center justify-center bg-gray-800">
         <Text className="text-2xl font-bold text-white">Tu carrito está vacío</Text>
+        <Text className="mt-2 px-8 text-center text-gray-400">
+          Los productos que añadas al carrito aparecerán acá
+        </Text>
       </View>
     );
   }
@@ -55,7 +58,9 @@ export default function CartScreen() {
           </View>
         )}
       />
-      <View className="border-t border-gray-700 bg-gray-800 p-4">
+      <View
+        className="border-t border-gray-700 bg-gray-800 p-4 mb-10"
+        >
         <View className="mb-3 flex-row justify-between">
           <Text className="text-lg text-gray-300">Total</Text>
           <Text className="text-2xl font-bold text-white">
@@ -68,7 +73,7 @@ export default function CartScreen() {
         <Pressable
           onPress={() => router.push('/checkout')}
           className="items-center rounded-xl bg-orange-500 p-4">
-          <Text className="text-lg font-bold text-white">Continuar al checkout</Text>
+          <Text className="text-lg font-bold text-white">Realizar Pedido</Text>
         </Pressable>
       </View>
     </View>

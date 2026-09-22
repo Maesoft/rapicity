@@ -1,12 +1,14 @@
-import { View, Text, Image, Pressable, ScrollView } from 'react-native';
+import { Alert, View, Text, Pressable, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useAuth } from '@/src/context/AuthContext';
 
 export default function Profile() {
-  const user = {
-    name: 'Matias Eguia',
-    email: 'matias@email.com',
-    avatar: 'https://i.pravatar.cc/150?img=70',
+  const { user, signOut } = useAuth();
+  const roleLabels = {
+    client: 'Cliente',
+    business: 'Negocio',
+    delivery: 'Repartidor',
   };
 
   const MenuItem = ({ icon, label, onPress }: any) => (
@@ -23,12 +25,19 @@ export default function Profile() {
   );
 
   return (
-    <ScrollView className="flex-1 bg-gray-800 p-4">
+    <ScrollView
+      className="flex-1 bg-gray-800 p-4"
+      contentContainerStyle={{ flexGrow: 1, paddingBottom: 24 }}>
       {/* 👤 HEADER */}
       <View className="mb-6 mt-10 items-center">
-        <Image source={{ uri: user.avatar }} className="mb-3 h-24 w-24 rounded-full" />
-        <Text className="text-xl font-bold text-white">{user.name}</Text>
-        <Text className="text-gray-400">{user.email}</Text>
+        <View className="mb-3 h-24 w-24 items-center justify-center rounded-full bg-gray-700">
+          <Ionicons name="person" size={48} color="#fb923c" />
+        </View>
+        <Text className="text-xl font-bold text-white">{user?.name ?? 'Usuario'}</Text>
+        <Text className="text-gray-400">{user?.email ?? 'Sin email'}</Text>
+        <Text className="mt-1 text-sm font-semibold text-orange-400">
+          {user ? roleLabels[user.role] : 'Cliente'}
+        </Text>
       </View>
 
       {/* 📦 OPCIONES */}
@@ -41,21 +50,37 @@ export default function Profile() {
       <MenuItem
         icon="location-outline"
         label="Direcciones"
-        onPress={() => console.log('Direcciones')}
+        onPress={() => router.push('/addresses')}
       />
 
-      <MenuItem icon="card-outline" label="Métodos de pago" onPress={() => console.log('Pagos')} />
+      <MenuItem
+        icon="card-outline"
+        label="Métodos de pago"
+        onPress={() => router.push('/payment-methods')}
+      />
 
       <MenuItem
         icon="settings-outline"
         label="Configuración"
-        onPress={() => console.log('Config')}
+        onPress={() => router.push('/settings')}
       />
 
       {/* 🚪 LOGOUT */}
       <Pressable
-        onPress={() => console.log('Logout')}
-        className="mt-6 items-center rounded-xl bg-red-500 p-4">
+        onPress={() =>
+          Alert.alert('Cerrar sesión', '¿Querés cerrar tu sesión?', [
+            { text: 'Cancelar', style: 'cancel' },
+            {
+              text: 'Cerrar sesión',
+              style: 'destructive',
+              onPress: () => {
+                signOut();
+                router.replace('/login');
+              },
+            },
+          ])
+        }
+        className="mt-auto items-center rounded-xl bg-red-500 p-4">
         <Text className="font-bold text-white">Cerrar sesión</Text>
       </Pressable>
     </ScrollView>

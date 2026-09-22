@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Alert, Pressable, Text, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { CartContext, OrderStatus } from '@/src/context/CartContext';
 
@@ -57,6 +57,25 @@ export default function OrderTrackingScreen() {
         ))}
         <Text className="mt-2 text-xl font-bold text-white">Total: ${order.total.toFixed(2)}</Text>
         <Text className="mt-1 text-gray-400">Pago: {order.paymentMethod}</Text>
+      </View>
+      <View
+        className="mt-auto flex-row gap-3 pb-4 pt-6"
+        style={{ transform: [{ translateY: -10 }] }}>
+        <Pressable
+          onPress={() =>
+            Alert.alert(
+              '¿Tuviste un problema?',
+              'La asistencia estará disponible próximamente. Podés comunicarte con soporte para recibir ayuda.'
+            )
+          }
+          className="flex-1 items-center rounded-xl border border-red-400 px-4 py-3">
+          <Text className="text-center font-bold text-red-400">Tuve un problema</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => router.replace('/(client)/(tabs)/orders')}
+          className="flex-1 items-center rounded-xl bg-orange-500 px-4 py-3">
+          <Text className="font-bold text-white">Cerrar</Text>
+        </Pressable>
       </View>
     </View>
   );

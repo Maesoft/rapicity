@@ -6,70 +6,68 @@ export default function TabsLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-
-        // 🎨 Estilo general (dark como tu app)
         tabBarStyle: {
-          backgroundColor: '#005F73', // gris oscuro (tailwind gray-800)
-          borderTopWidth: 0,
-          height: 100,
-          paddingBottom: 8,
+          backgroundColor: '#0f172a',
+          borderTopColor: '#1e293b',
+          borderTopWidth: 1,
+          height: 96,
+          paddingBottom: 10,
           paddingTop: 8,
         },
-
-        // 🎯 Colores
-        tabBarActiveTintColor: '#f97316', // naranja (orange-500)
-        tabBarInactiveTintColor: '#9ca3af', // gris
-
-        // 🧼 Labels
+        tabBarActiveTintColor: '#fb923c',
+        tabBarInactiveTintColor: '#94a3b8',
         tabBarLabelStyle: {
-          fontSize: 12,
+          fontSize: 11,
           fontWeight: '600',
         },
-      }}
-    >
-      {/* 🏠 INICIO */}
+        tabBarItemStyle: {
+          borderRadius: 14,
+          marginHorizontal: 4,
+          marginVertical: 6,
+          transform: [{ translateY: -10 }],
+        },
+      }}>
       <Tabs.Screen
         name="home"
         options={{
           title: 'Inicio',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
+            <Ionicons name="home-outline" size={size} color={color} />
           ),
         }}
       />
 
-      {/* ❤️ FAVORITOS */}
       <Tabs.Screen
-        name="favorites"
+        name="cart"
         options={{
-          title: 'Favoritos',
+          title: 'Carrito',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="heart" size={size} color={color} />
+            <Ionicons name="cart-outline" size={size} color={color} />
           ),
         }}
       />
 
-      {/* 🛒 CARRITO */}
       <Tabs.Screen
         name="orders"
         options={{
-          title: 'Ordenes',
+          title: 'Órdenes',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="cart" size={size} color={color} />
+            <Ionicons name="receipt-outline" size={size} color={color} />
           ),
         }}
       />
 
-      {/* 👤 PERFIL */}
       <Tabs.Screen
         name="profile"
         options={{
           title: 'Perfil',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person" size={size} color={color} />
+            <Ionicons name="person-outline" size={size} color={color} />
           ),
         }}
       />
+
+      <Tabs.Screen name="favorites" options={{ href: null }} />
     </Tabs>
   );
 }
