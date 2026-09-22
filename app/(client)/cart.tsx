@@ -1,5 +1,6 @@
 import { View, Text, FlatList, Image, Pressable } from 'react-native';
 import { useContext } from 'react';
+import { router } from 'expo-router';
 import { CartContext } from '@/src/context/CartContext';
 
 export default function CartScreen() {
@@ -15,14 +16,21 @@ export default function CartScreen() {
 
   return (
     <View className="flex-1 bg-gray-800">
-      <Text className="p-4 mt-10 text-2xl font-bold text-white">Mi carrito</Text>
+      <Text className="mt-10 p-4 text-2xl font-bold text-white">Mi carrito</Text>
 
       <FlatList
         data={cartContext.cart}
         keyExtractor={(item) => item.product.id}
         renderItem={({ item }) => (
           <View className="m-2 flex-row items-center rounded-xl bg-gray-700 p-4">
-            <Image source={{ uri: item.product.image }} className="h-20 w-20 rounded-lg" />
+            <Image
+              source={
+                typeof item.product.image === 'string'
+                  ? { uri: item.product.image }
+                  : item.product.image
+              }
+              className="h-20 w-20 rounded-lg"
+            />
 
             <View className="ml-3 flex-1">
               <Text className="text-lg font-bold text-white">{item.product.name}</Text>
@@ -47,6 +55,22 @@ export default function CartScreen() {
           </View>
         )}
       />
+      <View className="border-t border-gray-700 bg-gray-800 p-4">
+        <View className="mb-3 flex-row justify-between">
+          <Text className="text-lg text-gray-300">Total</Text>
+          <Text className="text-2xl font-bold text-white">
+            $
+            {cartContext.cart
+              .reduce((sum, item) => sum + item.product.price * item.quantity, 0)
+              .toFixed(2)}
+          </Text>
+        </View>
+        <Pressable
+          onPress={() => router.push('/checkout')}
+          className="items-center rounded-xl bg-orange-500 p-4">
+          <Text className="text-lg font-bold text-white">Continuar al checkout</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }

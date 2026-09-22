@@ -1,9 +1,17 @@
-import { createContext, useState, ReactNode } from 'react';
+import { createContext, ReactNode, useState } from 'react';
 import { Product } from '@/src/types/Product';
+import { CartItem } from '@/src/types/CartItem';
 
-type CartItem = {
-  product: Product;
-  quantity: number;
+export type OrderStatus = 'received' | 'preparing' | 'on_the_way' | 'delivered';
+
+export type Order = {
+  id: string;
+  items: CartItem[];
+  total: number;
+  address: string;
+  paymentMethod: string;
+  status: OrderStatus;
+  createdAt: string;
 };
 
 type CartContextType = {
@@ -11,6 +19,8 @@ type CartContextType = {
   addToCart: (product: Product) => void;
   increaseQuantity: (productId: string) => void;
   decreaseQuantity: (productId: string) => void;
+  orders: Order[];
+  placeOrder: (details: { address: string; paymentMethod: string }) => Order | null;
 };
 
 export const CartContext = createContext<CartContextType | null>(null);
@@ -21,38 +31,31 @@ type CartProviderProps = {
 
 export function CartProvider({ children }: CartProviderProps) {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
 
   const addToCart = (product: Product) => {
-    const existingProduct = cart.find((item) => item.product.id === product.id);
-
-    if (existingProduct) {
-      setCart(
-        cart.map((item) =>
+    setCart((currentCart) => {
+      const existingProduct = currentCart.find((item) => item.product.id === product.id);
+      if (existingProduct) {
+        return currentCart.map((item) =>
           item.product.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-        )
-      );
-    } else {
-      setCart([
-        ...cart,
-        {
-          product: product,
-          quantity: 1,
-        },
-      ]);
-    }
+        );
+      }
+      return [...currentCart, { product, quantity: 1 }];
+    });
   };
 
   const increaseQuantity = (productId: string) => {
-    setCart(
-      cart.map((item) =>
+    setCart((currentCart) =>
+      currentCart.map((item) =>
         item.product.id === productId ? { ...item, quantity: item.quantity + 1 } : item
       )
     );
   };
 
   const decreaseQuantity = (productId: string) => {
-    setCart(
-      cart
+    setCart((currentCart) =>
+      currentCart
         .map((item) =>
           item.product.id === productId ? { ...item, quantity: item.quantity - 1 } : item
         )
@@ -60,5 +63,28 @@ export function CartProvider({ children }: CartProviderProps) {
     );
   };
 
-  return <CartContext.Provider value={{ cart, addToCart, increaseQuantity, decreaseQuantity }}>{children}</CartContext.Provider>;
+  const placeOrder = (details: { address: string; paymentMethod: string }) => {
+    if (!cart.length) return null;
+
+    const order: Order = {
+      id: `RC-${Date.now().toString().slice(-6)}`,
+      items: cart.map((item) => ({ ...item })),
+      total: cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0),
+      address: details.address,
+      paymentMethod: details.paymentMethod,
+      status: 'received',
+      createdAt: new Date().toISOString(),
+    };
+
+    setOrders((currentOrders) => [order, ...currentOrders]);
+    setCart([]);
+    return order;
+  };
+
+  return (
+    <CartContext.Provider
+      value={{ cart, addToCart, increaseQuantity, decreaseQuantity, orders, placeOrder }}>
+      {children}
+    </CartContext.Provider>
+  );
 }

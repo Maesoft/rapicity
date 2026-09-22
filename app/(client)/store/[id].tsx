@@ -27,7 +27,7 @@ export default function ProductListScreen() {
 
   return (
     <View className="flex-1 bg-gray-800">
-      <Image source={{ uri: store.image }} className="h-40 w-full" />
+      <Image source={typeof store.image === 'string' ? { uri: store.image } : store.image} className="h-40 w-full" />
 
       <View className="p-4">
         <Text className="text-2xl font-bold text-white">{store.name}</Text>
@@ -41,7 +41,10 @@ export default function ProductListScreen() {
         renderItem={({ item }) => (
           <View className="m-2 flex-row items-center justify-between rounded-xl bg-gray-700 p-4">
             <View className="flex-row items-center gap-3">
-              <Image source={{ uri: item.image }} className="h-20 w-20 rounded-lg" />
+              <Image
+                source={typeof item.image === 'string' ? { uri: item.image } : item.image}
+                className="h-20 w-20 rounded-lg"
+              />
               <View>
                 <Text className="text-lg text-white">{item.name}</Text>
                 <Text className="text-gray-300">${item.price.toFixed(2)}</Text>

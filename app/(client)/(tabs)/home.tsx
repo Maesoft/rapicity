@@ -45,7 +45,7 @@ export default function Home() {
 
   // HOME CON SUBCATEGORIAS
   return (
-    <View className="flex-1 bg-gray-800 p-4">
+    <View className="flex-1 bg-gray-900 p-4">
       {/* Botón volver */}
       <TouchableOpacity onPress={handleBack} className="mb-2 mt-8">
         <Text className="font-semibold text-orange-500">← Volver a categorías</Text>
