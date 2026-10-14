@@ -10,7 +10,8 @@
       "tsconfigPaths": true
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-font"
     ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -27,10 +28,18 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.maesoft.rapicity",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#005F73"
       }
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "23ac59e9-de84-49b3-ad2d-7fc1f3212413"
+      }
+    },
+    "owner": "maesoft"
   }
 }
